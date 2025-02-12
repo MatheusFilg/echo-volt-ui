@@ -2,7 +2,7 @@ export function App() {
 
   return (
     <>
-      <h1>Teste 01</h1>
+      <h1 className="text-3xl font-bold">Teste 01</h1>
     </>
   )
 }
