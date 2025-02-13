@@ -13,7 +13,10 @@ export function SupplierForm() {
         Descubra o fornecedor ideal para o seu consumo de energia!
       </Label>
       <form id="supplier" className="flex flex-row w-full gap-4">
-        <Input placeholder="Informe o consumo mensal de energia" />
+        <Input
+          placeholder="Informe o consumo mensal de energia (kWh)"
+          type="number"
+        />
         <Button
           size="default"
           variant="outline"
