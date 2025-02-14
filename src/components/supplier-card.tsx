@@ -1,14 +1,20 @@
 import type { Supplier } from '@/types/supplier'
 import { Label } from './ui/label'
 import { User } from 'lucide-react'
+import { Button } from './ui/button'
 
 interface SupplierCardProps {
   data: Supplier
+  isSelected: boolean
+  onSelect: () => void
 }
 
-export function SupplierCard({ data }: SupplierCardProps) {
+export function SupplierCard({
+  data,
+  isSelected,
+  onSelect,
+}: SupplierCardProps) {
   let ratingStyle = ' '
-
   switch (data.rating) {
     case 'Ótimo':
       ratingStyle += 'bg-chart-2'
@@ -28,7 +34,13 @@ export function SupplierCard({ data }: SupplierCardProps) {
   }
 
   return (
-    <div className="flex bg-card active:bg-secondary active:dark:bg-primary-foreground border border-input flex-row gap-4 p-4 items-center rounded-md">
+    <div
+      className={
+        'flex bg-card active:bg-secondary dark:aria-checked:bg-primary-foreground border border-input flex-row gap-4 p-4 items-center rounded-md cursor-pointer'
+      }
+      aria-checked={isSelected}
+      onClick={onSelect}
+    >
       <img
         src="https://github.com/MatheusFilg.png"
         alt=""
@@ -63,16 +75,24 @@ export function SupplierCard({ data }: SupplierCardProps) {
             <Label className="italic text-sm text-muted-foreground">
               Clientes
             </Label>
-            <p className="flex flex-row items-center gap-1">
+            <p className="flex flex-row items-center justify-between">
               {data.totalClients} <User className="h-4 w-4" />
             </p>
           </div>
 
           <p
-            className={`rounded-4xl self-start text-background w-fit p-1.5 text-xs font-semibold place-self-end mt-2 ${ratingStyle}`}
+            className={`rounded-4xl self-start text-background w-fit p-1.5 text-xs font-semibold place-self-end mt-4 ${ratingStyle}`}
           >
             {data.rating}
           </p>
+          <Button
+            className={`${isSelected ? 'visible' : 'invisible'} text-sm translate-x-20 translate-y-8`}
+            variant="outline"
+            size="default"
+            onClick={() => console.log('teste 01')}
+          >
+            Confirmar
+          </Button>
         </div>
       </div>
     </div>

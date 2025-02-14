@@ -4,8 +4,11 @@ import type { Supplier } from './types/supplier'
 import { ThemeToggle } from './components/theme-toggle'
 import { SupplierForm } from './components/supplier-form'
 import { SupplierCard } from './components/supplier-card'
+import { useState } from 'react'
 
 export function App() {
+  const [selectedId, setSelectedId] = useState<string | null>(null)
+
   const inputLimit = 1
   const { data, loading } = useQuery<{ supplierTable: Supplier[] }>(
     getSuppliersByLimit,
@@ -17,7 +20,16 @@ export function App() {
       <SupplierForm />
       <div className="mt-6 w-full h-full grid grid-cols-4 grid-rows-3 gap-x-6 gap-y-4">
         {data?.supplierTable.map(item => {
-          return <SupplierCard key={item.id} data={item} />
+          return (
+            <SupplierCard
+              key={item.id}
+              data={item}
+              isSelected={selectedId === item.id}
+              onSelect={() => {
+                setSelectedId(prev => (prev === item.id ? null : item.id))
+              }}
+            />
+          )
         })}
       </div>
     </div>

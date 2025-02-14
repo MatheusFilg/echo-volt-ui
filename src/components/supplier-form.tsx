@@ -6,7 +6,6 @@ import { Label } from './ui/label'
 export function SupplierForm() {
   function handleSubmit(event: FormEvent) {
     event.preventDefault()
-    console.log('funcionou')
   }
 
   return (
