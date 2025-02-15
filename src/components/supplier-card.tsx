@@ -1,18 +1,26 @@
 import type { Supplier } from '@/types/supplier'
 import { Label } from './ui/label'
-import { User } from 'lucide-react'
+import { ChevronsRight, User } from 'lucide-react'
 import { Button } from './ui/button'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from './ui/tooltip'
 
 interface SupplierCardProps {
   data: Supplier
   isSelected: boolean
   onSelect: () => void
+  onConfirm: () => void
 }
 
 export function SupplierCard({
   data,
   isSelected,
   onSelect,
+  onConfirm,
 }: SupplierCardProps) {
   let ratingStyle = ' '
   switch (data.rating) {
@@ -31,6 +39,11 @@ export function SupplierCard({
     default:
       ratingStyle += 'bg-card-foreground'
       break
+  }
+
+  function handleSelectSupplier(e: React.MouseEvent) {
+    e.stopPropagation()
+    onConfirm()
   }
 
   return (
@@ -81,18 +94,27 @@ export function SupplierCard({
           </div>
 
           <p
-            className={`rounded-4xl self-start text-background w-fit p-1.5 text-xs font-semibold place-self-end mt-4 ${ratingStyle}`}
+            className={`rounded-4xl self-start text-background w-fit p-1.5 text-sm font-semibold place-self-end mt-2 ${ratingStyle}`}
           >
             {data.rating}
           </p>
-          <Button
-            className={`${isSelected ? 'visible' : 'invisible'} text-sm translate-x-20 translate-y-8`}
-            variant="outline"
-            size="default"
-            onClick={() => console.log('teste 01')}
-          >
-            Confirmar
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  className={`${isSelected ? 'visible' : 'invisible'} rounded-full text-sm translate-x-32 translate-y-9`}
+                  variant="outline"
+                  size="icon"
+                  onClick={handleSelectSupplier}
+                >
+                  <ChevronsRight />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent className="text-sm font-medium">
+                <p>Confirmar Escolha</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </div>
     </div>

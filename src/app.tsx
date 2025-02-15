@@ -4,20 +4,32 @@ import type { Supplier } from './types/supplier'
 import { ThemeToggle } from './components/theme-toggle'
 import { SupplierForm } from './components/supplier-form'
 import { SupplierCard } from './components/supplier-card'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { EmptySupplier } from './components/empty-supplier'
 import { NoResultSupplier } from './components/no-results-supplier'
-import { LoaderCircle } from 'lucide-react'
 import { LoadingSpinner } from './components/loading-spinner'
 
 export function App() {
-  const [selectedId, setSelectedId] = useState<string | null>(null)
-
   const [fetchSuppliers, { data, loading }] = useLazyQuery<{
     supplierTable: Supplier[]
   }>(getSuppliersByLimit, { variables: { consumption: 0 } })
 
+  const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [isConfirmed, setIsConfirmed] = useState(false)
+
+  useEffect(() => {
+    if (data?.supplierTable) {
+      setSelectedId(null)
+    }
+  }, [data])
+
+  function handleConfirmSupplier() {
+    setIsConfirmed(true)
+    setSelectedId(null)
+  }
+
   async function handleSearchSuppliers(consumption: number) {
+    setIsConfirmed(false)
     await fetchSuppliers({
       variables: { consumption },
     })
@@ -30,21 +42,24 @@ export function App() {
 
       {loading ? (
         <LoadingSpinner />
-      ) : data?.supplierTable.length === undefined ? (
+      ) : isConfirmed ? (
+        <EmptySupplier message="Fornecedor confirmado com sucesso! Deseja fazer uma nova consulta?" />
+      ) : !data?.supplierTable ? (
         <EmptySupplier />
-      ) : data.supplierTable.length === 0 ? (
+      ) : data?.supplierTable.length === 0 ? (
         <NoResultSupplier />
       ) : (
         <div className="mt-6 w-full h-full grid grid-cols-4 grid-rows-3 gap-x-6 gap-y-4">
-          {data?.supplierTable.map(item => {
+          {data.supplierTable.map(item => {
             return (
               <SupplierCard
                 key={item.id}
                 data={item}
                 isSelected={selectedId === item.id}
-                onSelect={() => {
+                onSelect={() =>
                   setSelectedId(prev => (prev === item.id ? null : item.id))
-                }}
+                }
+                onConfirm={handleConfirmSupplier}
               />
             )
           })}
