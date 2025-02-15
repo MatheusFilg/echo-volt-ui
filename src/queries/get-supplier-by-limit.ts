@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client'
 
 export const getSuppliersByLimit = gql`
-query GetSuppliersByLimit($inputLimit: Int!) {
-  supplierTable(where: { kwhMinLimit: { gte: $inputLimit } }) {
+query GetSuppliersByLimit($consumption: Int!) {
+  supplierTable(where: { kwhMinLimit: { lte: $consumption } }) {
     id
     name
     logo
