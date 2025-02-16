@@ -6,7 +6,7 @@ type EmptySupplierProps = {
 
 export function EmptySupplier({ message }: EmptySupplierProps) {
   return (
-    <div className="h-screen flex flex-col items-center  gap-4 justify-center">
+    <div className="h-screen flex flex-col items-center gap-4 justify-center">
       {message ? (
         <CircleCheckBig className="h-12 w-12" />
       ) : (

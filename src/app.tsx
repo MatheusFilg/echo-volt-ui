@@ -4,7 +4,7 @@ import type { Supplier } from './types/supplier'
 import { ThemeToggle } from './components/theme-toggle'
 import { SupplierForm } from './components/supplier-form'
 import { SupplierCard } from './components/supplier-card'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { EmptySupplier } from './components/empty-supplier'
 import { NoResultSupplier } from './components/no-results-supplier'
 import { LoadingSpinner } from './components/loading-spinner'
@@ -49,7 +49,7 @@ export function App() {
       ) : data?.supplierTable.length === 0 ? (
         <NoResultSupplier />
       ) : (
-        <div className="mt-6 w-full h-full grid grid-cols-4 grid-rows-3 gap-x-6 gap-y-4">
+        <div className="mt-6 w-full h-full grid grid-cols-3 2xl:grid-cols-4 2xl:gap-x-6 2xl:gap-y-4 gap-y-2">
           {data.supplierTable.map(item => {
             return (
               <SupplierCard

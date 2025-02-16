@@ -22,7 +22,7 @@ export function SupplierForm({ onSubmit, isLoading }: SupplierFormProps) {
   }
 
   return (
-    <div className="flex flex-col translate-y-4 gap-3 justify-center items-center self-center w-full">
+    <div className="flex flex-col xl:translate-y-4 gap-3 justify-center items-center self-center w-full">
       <form className="flex flex-col w-[620px] gap-4" onSubmit={handleSubmit}>
         <Label htmlFor="supplier" className="flex self-start">
           Descubra o fornecedor ideal para o seu consumo de energia!

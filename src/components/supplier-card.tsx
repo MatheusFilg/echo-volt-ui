@@ -49,15 +49,15 @@ export function SupplierCard({
   return (
     <div
       className={
-        'flex bg-card active:bg-secondary dark:aria-checked:bg-primary-foreground border border-input flex-row gap-4 p-4 items-center rounded-md cursor-pointer'
+        'flex bg-card active:bg-secondary dark:aria-checked:bg-primary-foreground border border-input 2xl:h-[240px] h-[200px] 2xl:w-[432px] w-[384px] flex-row gap-2 p-2 items-center rounded-md cursor-pointer'
       }
       aria-checked={isSelected}
       onClick={onSelect}
     >
       <img
-        src="https://github.com/MatheusFilg.png"
+        src={data.logo}
         alt=""
-        className="h-14 w-14 rounded-full"
+        className="h-12 w-12 text-foreground rounded-full"
       />
       <div className="grid grid-cols-2 w-full">
         <div className="flex flex-col">
@@ -72,7 +72,7 @@ export function SupplierCard({
             <Label className="italic text-sm text-muted-foreground">
               Limite mínimo (kWh)
             </Label>
-            <p>{data.kwhMinLimit} kWh</p>
+            <p>{data.kwhMinLimit.toLocaleString('pt-BR')} kWh</p>
           </div>
 
           <div>
@@ -102,7 +102,7 @@ export function SupplierCard({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
-                  className={`${isSelected ? 'visible' : 'invisible'} rounded-full text-sm translate-x-32 translate-y-9`}
+                  className={`${isSelected ? 'visible' : 'invisible'} rounded-full text-sm translate-x-30 translate-y-10 2xl:translate-x-36 2xl:translate-y-9`}
                   variant="outline"
                   size="icon"
                   onClick={handleSelectSupplier}
